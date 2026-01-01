@@ -62,14 +62,14 @@ function renderPastry() {
     `;
 
     li.addEventListener("click", () => {
-      addingOrder(item, index);
+      addingOrder(index);
     });
 
     itemLists.appendChild(li);
   });
 }
 
-function addingOrder(item, index) {
+function addingOrder(index) {
   pastries[index].quantity++;
   updateOrderList();
 }
@@ -80,7 +80,8 @@ function updateOrderList() {
 
   let total = 0;
 
-  pastries.forEach((item) => {
+  // Adding items to the order-list
+  pastries.forEach((item, index) => {
     if (item.quantity > 0) {
       const orderItem = document.createElement("li");
       orderItem.className = "order-item";
@@ -93,15 +94,26 @@ function updateOrderList() {
         <span>$ ${itemTotal}</span>
       `;
 
+      // Add click listener to decrease quantity
+      orderItem.addEventListener("click", () => {
+        if (item.quantity > 1) {
+          pastries[index].quantity--;
+        } else {
+          pastries[index].quantity = 0;
+        }
+        updateOrderList();
+      });
+
       orderList.appendChild(orderItem);
     }
   });
 
   currentTotal = total;
 
+  // Add total row
   if (total > 0) {
     const totalItem = document.createElement("li");
-    totalItem.className = "order-item";
+    totalItem.className = "order-item total-item";
     totalItem.innerHTML = `
       <p><strong>Total</strong></p>
       <span><strong>$ ${total}</strong></span>
@@ -109,6 +121,7 @@ function updateOrderList() {
     orderList.appendChild(totalItem);
   }
 
+  // Add checkout button
   if (total > 0) {
     const checkout = document.createElement("button");
     checkout.className = "checkout";
@@ -227,7 +240,7 @@ async function processOrder(customerName) {
     change: selectedMoney - currentTotal,
   };
 
-  const result = await createOrder(orderData); // gin pass the api function
+  const result = await createOrder(orderData);
 
   if (result.success) {
     console.log("Order saved:", result.data);
