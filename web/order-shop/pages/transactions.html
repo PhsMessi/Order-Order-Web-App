@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css//main.css">
+    <link rel="stylesheet" href="../css/transactions.css">
+    <title>Transactions - PASTRY ORDER</title>
+</head>
+
+<body>
+    <!-- navbar -->
+    <nav class="navbar">
+        <h2 class="title">Order Shop</h2>
+        <ul class="nav-items">
+            <li>
+                <a href="../index.html">Home</a>
+            </li>
+            <li>
+                <a href="./transactions.html">Transactions</a>
+            </li>
+            <li>
+                <a href="#">Products</a>
+            </li>
+            <li>
+                <p class="timedate"></p>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Transactions Section -->
+    <section class="transactions-section">
+        <h1>Transaction History</h1>
+
+        <div class="orders-container">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Payment Mode</th>
+                        <th>Money</th>
+                        <th>Change</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                    <!-- Orders will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+    <script type="module" src="../src/transactions.js"></script>
+</body>
+
+</html>

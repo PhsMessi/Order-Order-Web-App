@@ -1,0 +1,18 @@
+{
+  "name": "order-shop",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^7.2.4"
+  },
+  "dependencies": {
+    "moment": "^2.30.1",
+    "mysql2": "^3.16.0"
+  }
+}

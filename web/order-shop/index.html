@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/main.css">
+  <title>PASTRY ORDER</title>
+</head>
+
+<body>
+  <!-- navbar -->
+  <nav class="navbar">
+    <h2 class="title">Order Shop</h2>
+    <ul class="nav-items">
+      <li>
+        <a href="./pages/transactions.html">Transaction</a>
+      </li>
+      <li>
+        <a href="#">Products</a>
+      </li>
+      <li>
+        <p class="timedate"></p>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- section -->
+  <section class="main-container">
+    <div class="item-container">
+      <ul class="item-lists">
+        <!-- pastry products will render here -->
+      </ul>
+    </div>
+    <aside class="order-container">
+      <h3 class="order-title">Orders</h3>
+      <br>
+      <ul class="order-list">
+        <!-- orders will be here -->
+      </ul>
+    </aside>
+  </section>
+
+  <!-- Modal -->
+  <div class="modal" id="checkoutModal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Checkout</h2>
+
+      <!-- Customer Name -->
+      <div class="form-group">
+        <label>Customer Name:</label>
+        <input type="text" id="customerName" placeholder="Enter customer name">
+      </div>
+
+      <!-- Total Display -->
+      <div class="form-group">
+        <label>Total Amount:</label>
+        <p class="total-display">$ <span id="modalTotal">0</span></p>
+      </div>
+
+      <!-- Payment Mode -->
+      <div class="form-group">
+        <label>Payment Mode:</label>
+        <div class="payment-mode">
+          <button class="mode-btn active" data-mode="cash">Cash</button>
+          <button class="mode-btn" data-mode="gcash">GCash</button>
+        </div>
+      </div>
+
+      <!-- Cash Payment Section -->
+      <div id="cashSection">
+        <div class="form-group">
+          <label>Quick Select:</label>
+          <div class="money-buttons">
+            <button class="money-btn" data-amount="20">₱ 20</button>
+            <button class="money-btn" data-amount="50">₱ 50</button>
+            <button class="money-btn" data-amount="100">₱ 100</button>
+            <button class="money-btn" data-amount="200">₱ 200</button>
+            <button class="money-btn" data-amount="500">₱ 500</button>
+            <button class="money-btn" data-amount="1000">₱ 1000</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Or Enter Amount:</label>
+          <input type="number" id="customAmount" placeholder="Enter amount">
+        </div>
+
+        <div class="form-group">
+          <label>Change:</label>
+          <p class="change-display">$ <span id="changeAmount">0</span></p>
+        </div>
+      </div>
+
+      <!-- GCash QR Section -->
+      <div id="gcashSection" style="display: none;">
+        <div class="form-group">
+          <label>Scan QR Code:</label>
+          <img src="https://via.placeholder.com/200x200?text=GCash+QR+Code" alt="GCash QR" class="qr-code">
+          <p style="margin-top: 10px; color: #666; text-align: center;">Scan to pay ₱ <span id="gcashTotal">0</span></p>
+        </div>
+      </div>
+
+      <!-- Done Button -->
+      <button class="done-btn">Done</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+  <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>
