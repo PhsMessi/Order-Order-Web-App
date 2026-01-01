@@ -5,8 +5,15 @@ export function createOrder(req, res) {
     const { customerName, orderList, total, paymentMode, money, change } =
       req.body;
 
-    // Convert orderList array to JSON string
-    const orderListJSON = JSON.stringify(orderList);
+    // Remove URLs from orderList to save space
+    const cleanedOrderList = orderList.map((item) => ({
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+    }));
+
+    // Convert to JSON string
+    const orderListJSON = JSON.stringify(cleanedOrderList);
 
     const makeOrder =
       "INSERT INTO `order` (customerName, orderList, total, paymentMode, money, `change`) VALUES (?, ?, ?, ?, ?, ?)";
@@ -34,7 +41,7 @@ export function createOrder(req, res) {
           orderId: results.insertId,
           order: {
             customerName,
-            orderList,
+            orderList: cleanedOrderList,
             total,
             paymentMode,
             money,
