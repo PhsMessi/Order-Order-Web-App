@@ -73,8 +73,43 @@ let currentTotal = 0;
 let selectedMoney = 0;
 let paymentMode = "cash";
 
+switchButton();
 renderPastry();
 initCheckout();
+//renderCoffee();
+
+function switchButton() {
+  const navBtn = document.querySelectorAll(".nav-btn");
+  navBtn.forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+      navBtn.forEach((i) => i.classList.remove("active"));
+
+      btn.classList.add("active");
+
+      if (btn.classList.contains("active") && index === 0) {
+        renderPastry();
+      } else {
+        renderCoffee();
+      }
+    });
+  });
+}
+
+function renderCoffee() {
+  const itemLists = document.querySelector(".item-lists");
+  itemLists.innerHTML = "";
+
+  coffee.forEach((item, index) => {
+    const li = document.createElement("li");
+    li.className = "item";
+    li.innerHTML = `
+    <img src="${item.url}"  alt="${item.name}" value="${item.price}" />
+    <p> ${item.name} </p>
+    `;
+
+    itemLists.appendChild(li);
+  });
+}
 
 function renderPastry() {
   const itemLists = document.querySelector(".item-lists");
