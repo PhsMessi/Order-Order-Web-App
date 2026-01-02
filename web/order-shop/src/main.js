@@ -42,6 +42,33 @@ const pastries = [
   },
 ];
 
+const coffee = [
+  {
+    name: "Native Coffee",
+    url: "https://www.berresbrothers.com/cdn/shop/products/tres-rios-costa-rica-coffee-img-880x880_1024x.jpg?v=1582131025",
+    price: 45,
+    quantity: 0,
+  },
+  {
+    name: "Cappuchino",
+    url: "https://cornercoffeestore.com/wp-content/uploads/2021/02/does-a-cappuccino-have-caffeine.jpg",
+    price: 65,
+    quantity: 0,
+  },
+  {
+    name: "Latte",
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR8Q_RrELDLpBSuhHF9CEAWgSBo9mRQtSy-g&s",
+    price: 65,
+    quantity: 0,
+  },
+  {
+    name: "Macchiato",
+    url: "https://cooktoria.com/wp-content/uploads/2016/02/Caramel-Macchiato-Recipe-sq-1.jpg",
+    price: 65,
+    quantity: 0,
+  },
+];
+
 let currentTotal = 0;
 let selectedMoney = 0;
 let paymentMode = "cash";

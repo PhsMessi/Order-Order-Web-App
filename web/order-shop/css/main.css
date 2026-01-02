@@ -64,6 +64,10 @@
   object-fit: cover;
 }
 
+.hidden {
+  display: none;
+}
+
 .order-container {
   padding: 1.6rem;
   height: fit-content;

@@ -27,7 +27,9 @@ async function loadOrders() {
           )
           .join("");
 
-        const date = new Date(order.order_created).toLocaleString();
+        const date = moment(order.order_created).format(
+          "MMM DD, YYYY - hh:mm A"
+        );
 
         return `
           <tr>
