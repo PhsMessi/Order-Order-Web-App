@@ -3,65 +3,72 @@ import { createOrder } from "../api/orders_api.js";
 
 timedate();
 
-const pastries = [
+const orderMenu = [
   {
+    type: "bread",
     name: "Cake",
     url: "https://www.kumori.com.ph/cdn/shop/files/Screenshot_2024-11-05_at_10.20.20_AM.png?v=1730773240",
     price: 200,
     quantity: 0,
   },
   {
+    type: "bread",
     name: "Croissant",
     url: "https://assets.bonappetit.com/photos/68e6b4a316c63f9625380e02/1:1/w_2560%2Cc_limit/1025_Dominique-Ansel-RECIPE.jpg",
     price: 75,
     quantity: 0,
   },
   {
+    type: "bread",
     name: "Italian loaf bread",
     url: "https://breadsandsweets.com/wp-content/uploads/2022/05/everyday-bread-sq-1-of-1.jpg",
     price: 200,
     quantity: 0,
   },
   {
+    type: "bread",
     name: "Brownies",
     url: "https://beyondfrosting.com/wp-content/uploads/2022/07/Cocoa-Powder-Brownies-3960.jpg",
     price: 60,
     quantity: 0,
   },
   {
+    type: "bread",
     name: "Sausage bread",
     url: "https://www.lovebakesgoodcakes.com/wp-content/uploads/2018/04/Sausage-Bread-square.jpg",
     price: 75,
     quantity: 0,
   },
   {
+    type: "bread",
     name: "Garlic bread",
     url: "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2015/5/28/2/TM1A14F_Garlic-Bread_s4x3.jpg.rend.hgtvcom.1280.1280.suffix/1433523400627.webp",
     price: 40,
     quantity: 0,
   },
-];
-
-const coffee = [
   {
+    type: "drinks",
     name: "Native Coffee",
     url: "https://www.berresbrothers.com/cdn/shop/products/tres-rios-costa-rica-coffee-img-880x880_1024x.jpg?v=1582131025",
     price: 45,
     quantity: 0,
   },
   {
+    type: "drinks",
     name: "Cappuchino",
     url: "https://cornercoffeestore.com/wp-content/uploads/2021/02/does-a-cappuccino-have-caffeine.jpg",
     price: 65,
     quantity: 0,
   },
   {
+    type: "drinks",
     name: "Latte",
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR8Q_RrELDLpBSuhHF9CEAWgSBo9mRQtSy-g&s",
     price: 65,
     quantity: 0,
   },
   {
+    type: "drinks",
     name: "Macchiato",
     url: "https://cooktoria.com/wp-content/uploads/2016/02/Caramel-Macchiato-Recipe-sq-1.jpg",
     price: 65,
@@ -74,65 +81,49 @@ let selectedMoney = 0;
 let paymentMode = "cash";
 
 switchButton();
-renderPastry();
+renderProducts("bread"); // Start by showing bread
 initCheckout();
-//renderCoffee();
 
 function switchButton() {
   const navBtn = document.querySelectorAll(".nav-btn");
   navBtn.forEach((btn, index) => {
     btn.addEventListener("click", () => {
       navBtn.forEach((i) => i.classList.remove("active"));
-
       btn.classList.add("active");
 
-      if (btn.classList.contains("active") && index === 0) {
-        renderPastry();
+      if (index === 0) {
+        renderProducts("bread");
       } else {
-        renderCoffee();
+        renderProducts("drinks");
       }
     });
   });
 }
 
-function renderCoffee() {
+function renderProducts(type) {
   const itemLists = document.querySelector(".item-lists");
   itemLists.innerHTML = "";
 
-  coffee.forEach((item, index) => {
-    const li = document.createElement("li");
-    li.className = "item";
-    li.innerHTML = `
-    <img src="${item.url}"  alt="${item.name}" value="${item.price}" />
-    <p> ${item.name} </p>
-    `;
+  orderMenu.forEach((item, index) => {
+    if (item.type === type) {
+      const li = document.createElement("li");
+      li.className = "item";
+      li.innerHTML = `
+        <img src="${item.url}" alt="${item.name}" />
+        <p>${item.name}</p>
+      `;
 
-    itemLists.appendChild(li);
+      li.addEventListener("click", () => {
+        addingNewOrder(index);
+      });
+
+      itemLists.appendChild(li); //  append to DOM!
+    }
   });
 }
 
-function renderPastry() {
-  const itemLists = document.querySelector(".item-lists");
-  itemLists.innerHTML = "";
-
-  pastries.forEach((item, index) => {
-    const li = document.createElement("li");
-    li.className = "item";
-    li.innerHTML = `
-    <img src="${item.url}"  alt="${item.name}" value="${item.price}" />
-    <p> ${item.name} </p>
-    `;
-
-    li.addEventListener("click", () => {
-      addingOrder(index);
-    });
-
-    itemLists.appendChild(li);
-  });
-}
-
-function addingOrder(index) {
-  pastries[index].quantity++;
+function addingNewOrder(index) {
+  orderMenu[index].quantity++;
   updateOrderList();
 }
 
@@ -143,7 +134,7 @@ function updateOrderList() {
   let total = 0;
 
   // Adding items to the order-list
-  pastries.forEach((item, index) => {
+  orderMenu.forEach((item, index) => {
     if (item.quantity > 0) {
       const orderItem = document.createElement("li");
       orderItem.className = "order-item";
@@ -156,12 +147,12 @@ function updateOrderList() {
         <span>$ ${itemTotal}</span>
       `;
 
-      // Add click listener to decrease quantity
+      // decrease quantity
       orderItem.addEventListener("click", () => {
         if (item.quantity > 1) {
-          pastries[index].quantity--;
+          orderMenu[index].quantity--;
         } else {
-          pastries[index].quantity = 0;
+          orderMenu[index].quantity = 0;
         }
         updateOrderList();
       });
@@ -172,7 +163,7 @@ function updateOrderList() {
 
   currentTotal = total;
 
-  // Add total row
+  // total
   if (total > 0) {
     const totalItem = document.createElement("li");
     totalItem.className = "order-item total-item";
@@ -183,7 +174,7 @@ function updateOrderList() {
     orderList.appendChild(totalItem);
   }
 
-  // Add checkout button
+  // checkout button
   if (total > 0) {
     const checkout = document.createElement("button");
     checkout.className = "checkout";
@@ -295,7 +286,7 @@ function resetModal() {
 async function processOrder(customerName) {
   const orderData = {
     customerName: customerName,
-    orderList: pastries.filter((p) => p.quantity > 0),
+    orderList: orderMenu.filter((p) => p.quantity > 0),
     total: currentTotal,
     paymentMode: paymentMode,
     money: selectedMoney,
@@ -307,7 +298,7 @@ async function processOrder(customerName) {
   if (result.success) {
     console.log("Order saved:", result.data);
 
-    pastries.forEach((p) => (p.quantity = 0));
+    orderMenu.forEach((p) => (p.quantity = 0));
     updateOrderList();
 
     alert(
