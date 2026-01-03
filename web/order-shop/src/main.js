@@ -133,7 +133,6 @@ function updateOrderList() {
 
   let total = 0;
 
-  // Adding items to the order-list
   orderMenu.forEach((item, index) => {
     if (item.quantity > 0) {
       const orderItem = document.createElement("li");
@@ -301,10 +300,25 @@ async function processOrder(customerName) {
     orderMenu.forEach((p) => (p.quantity = 0));
     updateOrderList();
 
-    alert(
-      `Order confirmed for ${customerName}!\nOrder ID: ${result.data.orderId}\nTotal: $${currentTotal}\nThank you!`
-    );
+    // alert(
+    //   `Order confirmed for ${customerName}!\nOrder ID: ${result.data.orderId}\nTotal: $${currentTotal}\nThank you!`
+    // );
+
+    //success modal should be heree
+    displaySuccessModal();
+
+    setTimeout(endSuccessModal, 2000);
   } else {
     alert("Failed to save order: " + (result.data?.message || result.error));
   }
+}
+
+function endSuccessModal() {
+  const successModal = document.querySelector(".success-modal");
+  successModal.classList.add("hidden");
+}
+
+function displaySuccessModal() {
+  const successModal = document.querySelector(".success-modal");
+  successModal.classList.remove("hidden");
 }

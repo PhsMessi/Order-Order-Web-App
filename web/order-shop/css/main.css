@@ -124,6 +124,42 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.success-modal {
+  /* display: none; */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.success-modal-content {
+  background-color: whitesmoke;
+  padding: 1rem;
+  height: 150px;
+  width: 300px;
+  border-radius: 15px;
+  align-items: center;
+  position: absolute;
+  top: 230px;
+  left: 640px;
+}
+
+.success-done-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: burlywood;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
 .modal-content {
   background-color: #fefefe;
   margin: 3% auto;
