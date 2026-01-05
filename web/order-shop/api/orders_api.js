@@ -21,7 +21,13 @@ export async function createOrder(orderData) {
 
 export async function getAllOrders() {
   try {
-    const response = await fetch(`${BASE_URL}/getOrders`);
+    const response = await fetch(`${BASE_URL}/getOrders`, {
+      method: "GET",
+      headers: {
+        "x-api-key": "beagolezcanon25",
+        "Content-Type": "application/json",
+      },
+    });
     const result = await response.json();
     return { success: response.ok, data: result };
   } catch (error) {

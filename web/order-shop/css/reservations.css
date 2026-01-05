@@ -8,16 +8,24 @@
   padding: 1rem 3rem;
   display: flex;
   gap: 15px;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
   background-color: lightgrey;
 }
 
-/* changing navbar size */
+.nav-subcontainer {
+  display: flex;
+  gap: 15px;
+}
+
+/* working part */
 @media (width < 600px) {
+  .nav-subcontainer {
+    display: block;
+  }
   .navbar {
     display: block;
-    justify-content: center;
+    justify-content: start;
     padding: 0.7rem 1.2rem;
   }
   .title {
@@ -46,7 +54,48 @@
   border-radius: 15px;
 }
 
-/* working part */
+.orders-cart {
+  position: relative;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border: none;
+  background-color: #333;
+  color: white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Float cart button on mobile */
+@media (width < 600px) {
+  .orders-cart {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    padding: 1rem;
+    border-radius: 50%; /* Make it circular on mobile */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+  }
+}
+
+.orders-cart .badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #ff4444;
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
 .main-section {
   padding: 3rem;
   width: 100%;
@@ -56,6 +105,7 @@
 @media (width < 600px) {
   .main-section {
     padding: 1.5rem;
+    padding-bottom: 100px; /* Add padding to prevent content hiding behind floating button */
   }
 }
 
