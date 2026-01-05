@@ -300,10 +300,6 @@ async function processOrder(customerName) {
     orderMenu.forEach((p) => (p.quantity = 0));
     updateOrderList();
 
-    // alert(
-    //   `Order confirmed for ${customerName}!\nOrder ID: ${result.data.orderId}\nTotal: $${currentTotal}\nThank you!`
-    // );
-
     //success modal should be heree
     displaySuccessModal();
 

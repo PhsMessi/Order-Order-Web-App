@@ -12,6 +12,6 @@
 
 // function names
 
-// -- displayReservations(), createReservation(),
+// -- displayReservations(), createReservation(), (DONE)
 
 // ------------------------------------

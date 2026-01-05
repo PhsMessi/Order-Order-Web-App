@@ -5,7 +5,6 @@ export function createOrder(req, res) {
     const { customerName, orderList, total, paymentMode, money, change } =
       req.body;
 
-    // Remove URLs from orderList to save space
     const cleanedOrderList = orderList.map((item) => ({
       name: item.name,
       price: item.price,
