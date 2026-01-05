@@ -5,6 +5,7 @@ export async function createOrder(orderData) {
     const response = await fetch(`${BASE_URL}/postOrder`, {
       method: "POST",
       headers: {
+        "x-api-key": "beagolezcanon25",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(orderData),

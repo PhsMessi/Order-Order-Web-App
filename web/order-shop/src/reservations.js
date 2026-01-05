@@ -15,3 +15,6 @@
 // -- displayReservations(), createReservation(), (DONE)
 
 // ------------------------------------
+
+// Done testing displayReservations(), createReservation() API in Postman
+// Making API key and Securing Admin endpoints
