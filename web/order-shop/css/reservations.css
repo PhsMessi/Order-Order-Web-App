@@ -18,7 +18,6 @@
   gap: 15px;
 }
 
-/* working part */
 @media (width < 600px) {
   .nav-subcontainer {
     display: block;
@@ -132,4 +131,29 @@
   height: 280px;
   width: 285px;
   background-color: bisque;
+}
+
+/* working part */
+
+.modal {
+  height: 400px;
+  width: 470px;
+  border: solid 1px black;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: 1000;
+  background-color: beige;
+}
+
+.order-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 10px;
+}
+
+.hidden {
+  display: none;
 }
