@@ -184,12 +184,50 @@ body {
 }
 
 .order-list {
-  list-style: none;
+  /* list-style: none;
   margin: 0;
   padding: 0;
   gap: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; */
+
+  list-style: none;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+/* -------------- working partt */
+
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.order-item:hover {
+  background-color: #f8f9fa;
+}
+
+.order-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  background-color: #e9ecef;
+  flex-shrink: 0;
+}
+
+.order-item span {
+  font-size: 15px;
+  color: #212529;
+  font-weight: 500;
 }
 
 .hidden {

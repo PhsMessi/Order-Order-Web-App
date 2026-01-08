@@ -70,3 +70,5 @@ export const orderMenu = [
     quantity: 0,
   },
 ];
+
+export let cart = 0;
