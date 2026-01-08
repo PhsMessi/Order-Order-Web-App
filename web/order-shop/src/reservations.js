@@ -23,6 +23,7 @@ import { orderMenu } from "../public/data.js";
 
 displayProducts();
 updateCart();
+
 function displayProducts() {
   const productList = document.querySelector(".product-lists");
   productList.innerHTML = "";
@@ -37,36 +38,31 @@ function displayProducts() {
         <button class="addbtn">Add to cart</button>
     `;
 
-    // li.addEventListener("click", () => {
-    //   addtoCartModal(item);
-    // });
-
-    productList.appendChild(li);
-
-    const addbtn = document.querySelector(".addbtn");
+    const addbtn = li.querySelector(".addbtn");
     addbtn.addEventListener("click", () => {
-      addtoCartModal(item);
+      addtoCartModal(index, item);
     });
+    productList.appendChild(li);
   });
 }
 
-function addtoCartModal(item) {
+function addtoCartModal(index, item) {
   const orderList = document.querySelector(".order-list");
-  orderList.innerHTML = "";
 
   const li = document.createElement("li");
+  li.className = "order-item";
+  li.innerHTML = `
+  <img src="${item.url}" alt="${item.name}"> 
+    <span>${item.name} x1</span>
+  `;
 
-  item.forEach((item, index) => {
-    // working part
-  });
+  orderList.appendChild(li);
+  updateCart();
 }
 
 function updateCart() {
-  let partial = 0;
   const badge = document.querySelector(".badge");
   const orderItem = document.querySelectorAll(".order-item");
-  if (orderItem.length === 0) {
-    badge.textContent = partial;
-  }
+
   badge.textContent = orderItem.length;
 }
