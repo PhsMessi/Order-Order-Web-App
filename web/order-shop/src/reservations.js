@@ -19,7 +19,7 @@
 // Done testing displayReservations(), createReservation() API in Postman
 // Making API key and Securing Admin endpoints(Done)
 
-//adding item quantity in the modal without duplicating its element
+//adding item quantity in the modal without duplicating its element (Done)
 
 import { orderMenu } from "../public/data.js";
 
@@ -95,6 +95,17 @@ function updateCartModal() {
   });
 
   checkoutTotal = total;
+
+  if (total > 0) {
+    const totalItem = document.createElement("li");
+    totalItem.className = "order-item total-item";
+    totalItem.innerHTML = `
+      <p><strong>Total</strong></p>
+      <span><strong>$ ${total}</strong></span>
+    `;
+
+    orderList.appendChild(totalItem);
+  }
 }
 
 function updateCart() {
