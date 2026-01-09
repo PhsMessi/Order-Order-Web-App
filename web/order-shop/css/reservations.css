@@ -184,13 +184,6 @@ body {
 }
 
 .order-list {
-  /* list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: 10px;
-  display: flex;
-  flex-direction: column; */
-
   list-style: none;
   background: white;
   padding: 20px;
@@ -229,6 +222,23 @@ body {
   font-size: 15px;
   color: #212529;
   font-weight: 500;
+}
+
+.checkoutbtn {
+  margin-top: 13px;
+  padding: 12px;
+  border-radius: 8px;
+  width: 100%;
+  background-color: rgb(12, 206, 12);
+  border: white;
+  color: whitesmoke;
+  font-size: large;
+  cursor: pointer;
+}
+
+.checkoutbtn:hover {
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .hidden {
