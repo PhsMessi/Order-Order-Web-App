@@ -19,10 +19,14 @@
 // Done testing displayReservations(), createReservation() API in Postman
 // Making API key and Securing Admin endpoints(Done)
 
+//adding item quantity in the modal without duplicating its element
+
 import { orderMenu } from "../public/data.js";
 
+let checkoutTotal = 0;
 displayProducts();
 updateCart();
+toggleModal();
 
 function displayProducts() {
   const productList = document.querySelector(".product-lists");
@@ -34,30 +38,63 @@ function displayProducts() {
 
     li.innerHTML = `
         <img src="${item.url}" alt="${item.url}">
-        <p>${item.name}</p>
+        <p>${item.name} <span>${item.price}</span></p>
         <button class="addbtn">Add to cart</button>
     `;
 
     const addbtn = li.querySelector(".addbtn");
     addbtn.addEventListener("click", () => {
-      addtoCartModal(index, item);
+      // addtoCartModal(index, item);
+      updateProductQuantity(index);
     });
     productList.appendChild(li);
   });
 }
 
-function addtoCartModal(index, item) {
+function updateProductQuantity(index) {
+  orderMenu[index].quantity++;
+  console.log(
+    `product name: ${orderMenu[index].name} , quantity: ${orderMenu[index].quantity}`
+  );
+  updateCartModal();
+}
+
+function updateCartModal() {
+  console.log("called updatedCartModal");
+
   const orderList = document.querySelector(".order-list");
+  orderList.innerHTML = "";
 
-  const li = document.createElement("li");
-  li.className = "order-item";
-  li.innerHTML = `
-  <img src="${item.url}" alt="${item.name}"> 
-    <span>${item.name} x1</span>
-  `;
+  let total = 0;
 
-  orderList.appendChild(li);
-  updateCart();
+  orderMenu.forEach((item, index) => {
+    if (item.quantity > 0) {
+      const orderItem = document.createElement("li");
+      orderItem.className = "order-item";
+      // total for checkout
+      const partialTotal = item.price * item.quantity;
+      total += partialTotal;
+
+      orderItem.innerHTML = `
+      <img src="${item.url}" alt="${item.name}"> <span>${item.name} x${item.quantity}</span>
+      `;
+
+      orderItem.addEventListener("click", () => {
+        if (item.quantity > 1) {
+          orderMenu[index].quantity--;
+        } else {
+          orderMenu[index].quantity = 0;
+        }
+
+        updateCartModal();
+      });
+
+      orderList.appendChild(orderItem);
+      updateCart();
+    }
+  });
+
+  checkoutTotal = total;
 }
 
 function updateCart() {
@@ -65,4 +102,13 @@ function updateCart() {
   const orderItem = document.querySelectorAll(".order-item");
 
   badge.textContent = orderItem.length;
+}
+
+function toggleModal() {
+  const modal = document.querySelector(".modal");
+  const toggleBtn = document.querySelector(".orders-cart");
+  toggleBtn.addEventListener("click", () => {
+    // console.log("clicked ok");
+    modal.classList.toggle("hidden");
+  });
 }
