@@ -21,13 +21,29 @@
 
 //adding item quantity in the modal without duplicating its element (Done)
 
+//add checkout new slide inside modal(Done)
+// add all inputs must based in the mysql database(Done)
+// must add a warning of cancellation or reservation in which the after 5 mins the order wont be able to cancel.
+
+// ------------------------------------
+//final algorithm
+// 1. the checkout reservation from user UI
+// 2. after the reservation complete we will send an email cofirmation
+// 3. then checkout data and inputs will post to the data base.
+// 4. the columns of (money and change) will show NA
+// 5. then  status will automatically post as "pending"
+
+//----------------------------------------
+
 import { orderMenu } from "../public/data.js";
 
 let checkoutTotal = 0;
 displayProducts();
 updateCart();
-toggleModal();
 
+toggleModal();
+checkOutSlide();
+prevSlide();
 function displayProducts() {
   const productList = document.querySelector(".product-lists");
   productList.innerHTML = "";
@@ -121,5 +137,33 @@ function toggleModal() {
   toggleBtn.addEventListener("click", () => {
     // console.log("clicked ok");
     modal.classList.toggle("hidden");
+  });
+}
+
+function checkOutSlide() {
+  const checkoutbtn = document.querySelector(".checkoutbtn");
+  checkoutbtn.addEventListener("click", () => {
+    const slide1 = document.querySelector(".slide1");
+    const slide2 = document.querySelector(".slide2");
+
+    if (slide2.classList.contains("hidden")) {
+      slide1.classList.add("hidden");
+      slide2.classList.remove("hidden");
+    } else {
+      slide2.classList.add("hidden");
+    }
+  });
+}
+
+function prevSlide() {
+  const slidebtn2 = document.querySelector(".btn-slide2");
+  slidebtn2.addEventListener("click", () => {
+    const slide1 = document.querySelector(".slide1");
+    const slide2 = document.querySelector(".slide2");
+
+    if (slide1.classList.contains("hidden")) {
+      slide2.classList.add("hidden");
+      slide1.classList.remove("hidden");
+    }
   });
 }

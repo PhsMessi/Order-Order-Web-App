@@ -193,8 +193,6 @@ body {
   max-width: 400px;
 }
 
-/* -------------- working partt */
-
 .order-item {
   display: flex;
   align-items: center;
@@ -229,7 +227,7 @@ body {
   padding: 12px;
   border-radius: 8px;
   width: 100%;
-  background-color: rgb(12, 206, 12);
+  background-color: #4caf50;
   border: white;
   color: whitesmoke;
   font-size: large;
@@ -239,6 +237,7 @@ body {
 .checkoutbtn:hover {
   font-weight: bold;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background-color: rgb(12, 206, 12);
 }
 
 .hidden {
@@ -287,4 +286,48 @@ body {
     width: 90%;
     max-width: 400px;
   }
+}
+
+/* -------------- working partt */
+.form-group:first-of-type {
+  margin-top: 20px;
+}
+.form-group {
+  margin-bottom: 6px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.mode-btn {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ddd;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.mode-btn.active {
+  background-color: #4caf50;
+  color: white;
+  border-color: #4caf50;
+}
+
+.btn-slide2 {
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }
