@@ -12,7 +12,7 @@ router.post("/postOrder", api_key_auth, createOrder);
 router.get("/getOrders", api_key_auth, getOrders);
 
 // reservations
-router.post("/createReservation", createReservation);
+router.post("/createReservation", api_key_auth, createReservation);
 
 router.get("/reservations", api_key_auth, displayReservations);
 

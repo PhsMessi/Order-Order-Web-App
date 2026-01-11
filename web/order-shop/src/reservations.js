@@ -35,14 +35,16 @@
 
 //----------------------------------------
 
-// must finish today inputs, validation use a package, async post for inputs
-
+// must finish today inputs(Done), validation use a package(Done), async post for inputs (Done)
+// Post reservation API Call (Done)
+// Must make a confirmation email with nodejs package
 import { orderMenu } from "../public/data.js";
 import { emailValidation } from "../utils/emailValidation.js";
 import {
   phonePhValidation,
   formatPhoneNumber,
 } from "../utils/phoneValidation.js";
+import { createReservation } from "../api/orders_api.js";
 let checkoutTotal = 0;
 displayProducts();
 updateCart();
@@ -121,8 +123,6 @@ function updateCartModal() {
     }
   });
 
-  //checkoutTotal = total;
-
   checkoutTotal = total;
 
   if (total > 0) {
@@ -188,6 +188,9 @@ function initReservation() {
   const phone = document.getElementById("phone");
   const paymentbtn = document.querySelectorAll(".mode-btn");
 
+  const slide2CheckoutBtn = document.querySelector(".slide2 .checkoutbtn");
+
+  // name
   name.addEventListener("blur", (e) => {
     const value = e.target.value.trim();
     name.classList.remove("valid", "invalid", "neutral");
@@ -200,10 +203,9 @@ function initReservation() {
       console.log("Invalid name - too short");
     }
   });
-
+  //email
   email.addEventListener("blur", (e) => {
     const value = e.target.value.trim();
-
     email.classList.remove("valid", "invalid", "neutral");
 
     if (emailValidation(value)) {
@@ -214,10 +216,9 @@ function initReservation() {
       console.log("Invalid email");
     }
   });
-
+  // phone
   phone.addEventListener("blur", (e) => {
     const value = e.target.value.trim();
-
     phone.classList.remove("valid", "invalid", "neutral");
 
     if (phonePhValidation(value)) {
@@ -229,11 +230,46 @@ function initReservation() {
     }
   });
 
+  //payment mode selection
   paymentbtn.forEach((btn) => {
     btn.addEventListener("click", () => {
       paymentbtn.forEach((i) => i.classList.remove("selected"));
       btn.classList.add("selected");
     });
+  });
+
+  slide2CheckoutBtn.addEventListener("click", async () => {
+    // final check inputs
+    const nameValue = name.value.trim();
+    const emailValue = email.value.trim();
+    const phoneValue = phone.value.trim();
+    const pickupTime = document.getElementById("pickup-time").value;
+
+    if (nameValue.length < 3) {
+      alert("Please enter a valid name (at least 3 characters)");
+      name.focus();
+      return;
+    }
+
+    if (!emailValidation(emailValue)) {
+      alert("Please enter a valid email address");
+      email.focus();
+      return;
+    }
+
+    if (!phonePhValidation(phoneValue)) {
+      alert("Please enter a valid phone number");
+      phone.focus();
+      return;
+    }
+
+    if (!pickupTime) {
+      alert("Please select a pickup time");
+      return;
+    }
+
+    // All validations passed - process reservation
+    await processReservation(nameValue, phoneValue, emailValue);
   });
 }
 
@@ -254,4 +290,83 @@ function filteredQuantity() {
   summaryTotal.textContent = `Total: $${checkoutTotal}`;
 
   console.log(orderSummary, checkoutTotal);
+}
+
+async function processReservation(name, phone, email) {
+  const selectedPaymentBtn = document.querySelector(".mode-btn.selected");
+  const paymentMode = selectedPaymentBtn
+    ? selectedPaymentBtn.dataset.mode
+    : "cash";
+  const pickupTime = document.getElementById("pickup-time").value;
+
+  // Calculate pickup time window (30 minutes)
+  const pickupStart = new Date(pickupTime);
+  const pickupEnd = new Date(pickupStart.getTime() + 30 * 60000);
+
+  //  MySQL DATETIME
+  const formatDateTime = (date) => {
+    return date.toISOString().slice(0, 19).replace("T", " ");
+  };
+
+  const reservationData = {
+    customer_name: name,
+    customer_phone: formatPhoneNumber(phone) || phone,
+    customer_email: email,
+    orderList: orderMenu.filter((item) => item.quantity > 0),
+    total: checkoutTotal,
+    money: 0,
+    change: 0,
+    paid: 0,
+    paymentMode: paymentMode,
+    pickup_time_start: formatDateTime(pickupStart),
+    pickup_time_end: formatDateTime(pickupEnd),
+  };
+
+  console.log("Processing reservation:", reservationData);
+
+  const result = await createReservation(reservationData);
+
+  if (result.success) {
+    alert(
+      `Reservation successful!\nReservation ID: ${result.data.reservationId}\nPickup: ${pickupTime}`
+    );
+
+    // TODO: Send confirmation email
+
+    // Reset
+    resetReservationForm();
+
+    const slide1 = document.querySelector(".slide1");
+    const slide2 = document.querySelector(".slide2");
+    const modal = document.querySelector(".modal");
+
+    slide2.classList.add("hidden");
+    slide1.classList.remove("hidden");
+    modal.classList.add("hidden");
+
+    // Reset cart
+    orderMenu.forEach((item) => (item.quantity = 0));
+    updateCartModal();
+  } else {
+    alert(`Reservation failed: ${result.data?.message || result.error}`);
+  }
+}
+
+function resetReservationForm() {
+  document.getElementById("name").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("phone").value = "";
+  document.getElementById("pickup-time").value = "";
+
+  const inputs = document.querySelectorAll(".slide2 input");
+  inputs.forEach((input) => {
+    input.classList.remove("valid", "invalid");
+  });
+
+  const paymentBtns = document.querySelectorAll(".mode-btn");
+  paymentBtns.forEach((btn) => btn.classList.remove("selected"));
+  document.querySelector('[data-mode="cash"]').classList.add("selected");
+
+  document.querySelector(".summary").textContent = "";
+  document.querySelector(".summary-total").textContent = "";
 }
