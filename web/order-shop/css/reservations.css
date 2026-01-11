@@ -326,6 +326,11 @@ body {
   border-color: #4caf50;
 }
 
+.slide2 {
+  padding: 20px;
+  scroll-behavior: smooth;
+}
+
 .btn-slide2 {
   padding: 0.3rem 0.6rem;
   border-radius: 5px;

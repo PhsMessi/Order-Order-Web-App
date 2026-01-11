@@ -35,8 +35,10 @@
 
 //----------------------------------------
 
-import { orderMenu } from "../public/data.js";
+// must finish today inputs, validation use a package, async post for inputs
 
+import { orderMenu } from "../public/data.js";
+import { emailValidation } from "../utils/emailValidation.js";
 let checkoutTotal = 0;
 displayProducts();
 updateCart();
@@ -44,6 +46,8 @@ updateCart();
 toggleModal();
 checkOutSlide();
 prevSlide();
+// for testing only call
+emailValidation("devshaiya23@gmail.com");
 function displayProducts() {
   const productList = document.querySelector(".product-lists");
   productList.innerHTML = "";
@@ -166,4 +170,11 @@ function prevSlide() {
       slide1.classList.remove("hidden");
     }
   });
+}
+
+function initReservation() {
+  // first validation part
+  const name = document.getElementsByName("name");
+  const email = document.getElementsByName("email");
+  const phone = document.getElementsByName("phone");
 }
