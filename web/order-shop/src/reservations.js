@@ -39,6 +39,10 @@
 
 import { orderMenu } from "../public/data.js";
 import { emailValidation } from "../utils/emailValidation.js";
+import {
+  phonePhValidation,
+  formatPhoneNumber,
+} from "../utils/phoneValidation.js";
 let checkoutTotal = 0;
 displayProducts();
 updateCart();
@@ -47,7 +51,7 @@ toggleModal();
 checkOutSlide();
 prevSlide();
 // for testing only call
-emailValidation("devshaiya23@gmail.com");
+// emailValidation("devshaiya23@gmail.com");
 function displayProducts() {
   const productList = document.querySelector(".product-lists");
   productList.innerHTML = "";
