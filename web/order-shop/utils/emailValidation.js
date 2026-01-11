@@ -6,4 +6,4 @@ export function emailValidation(inputEmail) {
 }
 
 //for testing only
-console.log(emailValidation("devshaiya23@gmail.com"));
+//console.log(emailValidation("devshaiya23@gmail.com"));

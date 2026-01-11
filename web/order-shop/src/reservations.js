@@ -52,6 +52,11 @@ checkOutSlide();
 prevSlide();
 // for testing only call
 // emailValidation("devshaiya23@gmail.com");
+
+// for testing again
+initReservation();
+//inputColor();
+
 function displayProducts() {
   const productList = document.querySelector(".product-lists");
   productList.innerHTML = "";
@@ -177,8 +182,56 @@ function prevSlide() {
 }
 
 function initReservation() {
-  // first validation part
-  const name = document.getElementsByName("name");
-  const email = document.getElementsByName("email");
-  const phone = document.getElementsByName("phone");
+  const name = document.getElementById("name");
+  const email = document.getElementById("email");
+  const phone = document.getElementById("phone");
+  const paymentbtn = document.querySelectorAll(".mode-btn");
+
+  name.addEventListener("blur", (e) => {
+    const value = e.target.value.trim();
+    name.classList.remove("valid", "invalid", "neutral");
+
+    if (value.length >= 3) {
+      name.classList.add("valid");
+      console.log("Valid name");
+    } else {
+      name.classList.add("invalid");
+      console.log("Invalid name - too short");
+    }
+  });
+
+  email.addEventListener("blur", (e) => {
+    const value = e.target.value.trim();
+
+    email.classList.remove("valid", "invalid", "neutral");
+
+    if (emailValidation(value)) {
+      email.classList.add("valid");
+      console.log("Valid email");
+    } else {
+      email.classList.add("invalid");
+      console.log("Invalid email");
+    }
+  });
+
+  phone.addEventListener("blur", (e) => {
+    const value = e.target.value.trim();
+
+    phone.classList.remove("valid", "invalid", "neutral");
+
+    if (phonePhValidation(value)) {
+      phone.classList.add("valid");
+      console.log("Valid phone");
+    } else {
+      phone.classList.add("invalid");
+      console.log("Invalid phone");
+    }
+  });
+
+  paymentbtn.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      paymentbtn.forEach((i) => i.classList.remove("selected"));
+      btn.classList.add("selected");
+    });
+  });
 }

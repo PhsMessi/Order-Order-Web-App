@@ -288,7 +288,6 @@ body {
   }
 }
 
-/* -------------- working partt */
 .form-group:first-of-type {
   margin-top: 20px;
 }
@@ -305,7 +304,7 @@ body {
 .form-group input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
   border-radius: 5px;
   font-size: 14px;
 }
@@ -320,12 +319,6 @@ body {
   font-size: 14px;
 }
 
-.mode-btn.active {
-  background-color: #4caf50;
-  color: white;
-  border-color: #4caf50;
-}
-
 .slide2 {
   padding: 20px;
   scroll-behavior: smooth;
@@ -335,4 +328,32 @@ body {
   padding: 0.3rem 0.6rem;
   border-radius: 5px;
   margin-bottom: 5px;
+}
+
+/* ----------------------------------------- working partt */
+
+/* INPUTS VALIDATION  ERRORS AND VALID */
+
+input {
+  border: 2px solid #ddd;
+  padding: 10px;
+  transition: border-color 0.3s;
+}
+
+input.valid {
+  border-color: #4caf50;
+}
+
+input.invalid {
+  border-color: #f44336;
+}
+
+input:focus {
+  outline: none;
+  border-color: #2196f3;
+}
+
+.mode-btn.selected {
+  background-color: #4caf50;
+  color: white;
 }
