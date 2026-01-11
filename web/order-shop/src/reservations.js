@@ -50,8 +50,6 @@ updateCart();
 toggleModal();
 checkOutSlide();
 prevSlide();
-// for testing only call
-// emailValidation("devshaiya23@gmail.com");
 
 // for testing again
 initReservation();
@@ -123,6 +121,8 @@ function updateCartModal() {
     }
   });
 
+  //checkoutTotal = total;
+
   checkoutTotal = total;
 
   if (total > 0) {
@@ -134,6 +134,7 @@ function updateCartModal() {
     `;
 
     orderList.appendChild(totalItem);
+    filteredQuantity();
   }
 }
 
@@ -234,4 +235,23 @@ function initReservation() {
       btn.classList.add("selected");
     });
   });
+}
+
+function filteredQuantity() {
+  const summary = document.querySelector(".summary");
+  const summaryTotal = document.querySelector(".summary-total");
+
+  const orderList = orderMenu.filter((item) => item.quantity > 0);
+
+  const orderSummary = orderList
+    .map(
+      (item) =>
+        `${item.name} x${item.quantity} - $${item.price * item.quantity}`
+    )
+    .join("\n");
+
+  summary.textContent = orderSummary;
+  summaryTotal.textContent = `Total: $${checkoutTotal}`;
+
+  console.log(orderSummary, checkoutTotal);
 }
