@@ -3,6 +3,7 @@ import { createOrder, getOrders } from "../controller/orderController.js";
 import {
   displayReservations,
   createReservation,
+  confirmationEmail,
 } from "../controller/reservationController.js";
 
 import { api_key_auth } from "../middleware/api_key_auth.js";
@@ -15,5 +16,7 @@ router.get("/getOrders", api_key_auth, getOrders);
 router.post("/createReservation", api_key_auth, createReservation);
 
 router.get("/reservations", api_key_auth, displayReservations);
+// email conirmation
+router.post("/emailConfirmation", api_key_auth, confirmationEmail);
 
 export default router;

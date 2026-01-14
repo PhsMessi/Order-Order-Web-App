@@ -1,6 +1,6 @@
 import { mysql } from "../integrations/mysql.js";
 import { reservationId } from "../utils/reservation_Id.js";
-
+import nodemailer from "nodemailer";
 export function displayReservations(req, res) {
   try {
     const getAllReservations =
@@ -96,5 +96,50 @@ export function createReservation(req, res) {
   } catch (error) {
     console.log("connection failed", error);
     return res.status(500).json({ message: "failed request" });
+  }
+}
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+export async function confirmationEmail(req, res) {
+  try {
+    const { email, name, reservationId, pickupTime, orderList, total } =
+      req.body;
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: `Reservation Confirmation - #${reservationId}`,
+      html: `
+      <h2>Thank you for your reservation, ${name}!</h2>
+      <p><strong>Reservation ID:</strong> ${reservationId}</p>
+      <p><strong>Pickup Time:</strong> ${pickupTime}</p>
+      <h3>Order Details:</h3>
+      <ul>
+        ${orderList
+          .map(
+            (item) =>
+              `<li>${item.name} x${item.quantity} - $${(
+                item.price * item.quantity
+              ).toFixed(2)}</li>`
+          )
+          .join("")}
+      </ul>
+      <p><strong>Total:</strong> $${total.toFixed(2)}</p>
+      <p>We look forward to serving you!</p>
+    `,
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.json({ success: true, message: "Email sent successfully" });
+  } catch (err) {
+    console.error("Email error:", err);
+    res.status(500).json({ success: false, error: err.message });
   }
 }

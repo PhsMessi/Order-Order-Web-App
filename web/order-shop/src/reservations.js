@@ -45,7 +45,7 @@ import {
   phonePhValidation,
   formatPhoneNumber,
 } from "../utils/phoneValidation.js";
-import { createReservation } from "../api/orders_api.js";
+import { createReservation, sendConfirmationEmail } from "../api/orders_api.js";
 let checkoutTotal = 0;
 displayProducts();
 updateCart();
@@ -302,6 +302,7 @@ function filteredQuantity() {
 }
 
 /* API POST calling  */
+
 async function processReservation(name, phone, email) {
   const selectedPaymentBtn = document.querySelector(".mode-btn.selected");
   const paymentMode = selectedPaymentBtn
@@ -337,11 +338,30 @@ async function processReservation(name, phone, email) {
   const result = await createReservation(reservationData);
 
   if (result.success) {
-    alert(
-      `Reservation successful!\nReservation ID: ${result.data.reservationId}\nPickup: ${pickupTime}`
-    );
+    // ✅ Send confirmation email
+    try {
+      const emailResult = await sendConfirmationEmail({
+        email: email,
+        name: name,
+        reservationId: result.data.reservationId,
+        pickupTime: pickupTime,
+        orderList: reservationData.orderList,
+        total: checkoutTotal,
+      });
 
-    // TODO: Send confirmation email
+      if (emailResult.success) {
+        console.log("Confirmation email sent successfully");
+      } else {
+        console.error("Failed to send email:", emailResult.error);
+      }
+    } catch (error) {
+      console.error("Email error:", error);
+      // Don't fail the reservation if email fails
+    }
+
+    alert(
+      `Reservation successful!\nReservation ID: ${result.data.reservationId}\nPickup: ${pickupTime}\nConfirmation email sent to ${email}`
+    );
 
     // Reset
     resetReservationForm();

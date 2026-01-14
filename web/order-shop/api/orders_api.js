@@ -59,3 +59,22 @@ export async function createReservation(reservationData) {
     return { success: false, error: error.message };
   }
 }
+
+export async function sendConfirmationEmail(emailData) {
+  try {
+    const response = await fetch(`${BASE_URL}/emailConfirmation`, {
+      method: "POST",
+      headers: {
+        "x-api-key": "beagolezcanon25",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(emailData),
+    });
+
+    const result = await response.json();
+    return { success: response.ok, data: result };
+  } catch (error) {
+    console.error("Error sending email:", error);
+    return { success: false, error: error.message };
+  }
+}
