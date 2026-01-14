@@ -37,6 +37,7 @@
 
 // must finish today inputs(Done), validation use a package(Done), async post for inputs (Done)
 // Post reservation API Call (Done)
+//-----------------------------------------------------------------------
 // Must make a confirmation email with nodejs package
 import { orderMenu } from "../public/data.js";
 import { emailValidation } from "../utils/emailValidation.js";
@@ -57,6 +58,7 @@ prevSlide();
 initReservation();
 //inputColor();
 
+/* function that display products from imported orderMenu  */
 function displayProducts() {
   const productList = document.querySelector(".product-lists");
   productList.innerHTML = "";
@@ -73,13 +75,12 @@ function displayProducts() {
 
     const addbtn = li.querySelector(".addbtn");
     addbtn.addEventListener("click", () => {
-      // addtoCartModal(index, item);
       updateProductQuantity(index);
     });
     productList.appendChild(li);
   });
 }
-
+/* function that updated quantity in the orderMenu  */
 function updateProductQuantity(index) {
   orderMenu[index].quantity++;
   console.log(
@@ -88,6 +89,8 @@ function updateProductQuantity(index) {
   updateCartModal();
 }
 
+/* function that creates an "li" element and appends the element based on the quantity to the parent ul list */
+/* it also add and event to each of the appended child elements to be remove from the order lists */
 function updateCartModal() {
   console.log("called updatedCartModal");
 
@@ -125,6 +128,7 @@ function updateCartModal() {
 
   checkoutTotal = total;
 
+  /* this element will display of total is updated or greater than zero */
   if (total > 0) {
     const totalItem = document.createElement("li");
     totalItem.className = "order-item total-item";
@@ -138,6 +142,7 @@ function updateCartModal() {
   }
 }
 
+/* function that update the state of icon depending on that length of order lists */
 function updateCart() {
   const badge = document.querySelector(".badge");
   const orderItem = document.querySelectorAll(".order-item");
@@ -145,15 +150,16 @@ function updateCart() {
   badge.textContent = orderItem.length;
 }
 
+/* function for opening and closing a modal for checkout */
 function toggleModal() {
   const modal = document.querySelector(".modal");
   const toggleBtn = document.querySelector(".orders-cart");
   toggleBtn.addEventListener("click", () => {
-    // console.log("clicked ok");
     modal.classList.toggle("hidden");
   });
 }
 
+/* function that open the slide modal for user info checkout*/
 function checkOutSlide() {
   const checkoutbtn = document.querySelector(".checkoutbtn");
   checkoutbtn.addEventListener("click", () => {
@@ -169,6 +175,7 @@ function checkOutSlide() {
   });
 }
 
+/* function that goes back to the first modal slide */
 function prevSlide() {
   const slidebtn2 = document.querySelector(".btn-slide2");
   slidebtn2.addEventListener("click", () => {
@@ -182,6 +189,7 @@ function prevSlide() {
   });
 }
 
+/* function to that process user inputs for reservatons and calling call a API function */
 function initReservation() {
   const name = document.getElementById("name");
   const email = document.getElementById("email");
@@ -273,6 +281,7 @@ function initReservation() {
   });
 }
 
+/* function that displays order summary for checkout slide 2 */
 function filteredQuantity() {
   const summary = document.querySelector(".summary");
   const summaryTotal = document.querySelector(".summary-total");
@@ -292,6 +301,7 @@ function filteredQuantity() {
   console.log(orderSummary, checkoutTotal);
 }
 
+/* API POST calling  */
 async function processReservation(name, phone, email) {
   const selectedPaymentBtn = document.querySelector(".mode-btn.selected");
   const paymentMode = selectedPaymentBtn
@@ -352,6 +362,7 @@ async function processReservation(name, phone, email) {
   }
 }
 
+/* function for resetting all user inputs if failed or success post api call */
 function resetReservationForm() {
   document.getElementById("name").value = "";
   document.getElementById("email").value = "";

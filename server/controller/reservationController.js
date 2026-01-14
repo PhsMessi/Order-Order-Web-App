@@ -85,7 +85,7 @@ export function createReservation(req, res) {
 
         return res.status(201).json({
           message: "reservation created successfully",
-          reservationId: results.insertId, // Auto-generated ID
+          reservationId: results.insertId,
           pickupTime: {
             start: pickup_time_start,
             end: pickup_time_end,

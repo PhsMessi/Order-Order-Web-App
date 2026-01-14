@@ -11,6 +11,7 @@ switchButton();
 renderProducts("bread"); // Start by showing bread
 initCheckout();
 
+/* function that switch the buttonfor showing bread or coffee products */
 function switchButton() {
   const navBtn = document.querySelectorAll(".nav-btn");
   navBtn.forEach((btn, index) => {
@@ -27,6 +28,7 @@ function switchButton() {
   });
 }
 
+/* function to reder products from orderMenu */
 function renderProducts(type) {
   const itemLists = document.querySelector(".item-lists");
   itemLists.innerHTML = "";
@@ -49,11 +51,15 @@ function renderProducts(type) {
   });
 }
 
+/* function that updated the quantity and calls the updatedLists */
+
 function addingNewOrder(index) {
   orderMenu[index].quantity++;
   updateOrderList();
 }
 
+/* function that updates the orderlist based on the quantity of the products */
+/* also adding event for each item for removing is from the parent order list */
 function updateOrderList() {
   const orderList = document.querySelector(".order-list");
   orderList.innerHTML = "";
@@ -90,6 +96,7 @@ function updateOrderList() {
   currentTotal = total;
 
   // total
+  /* this element will display of total is updated or greater than zero */
   if (total > 0) {
     const totalItem = document.createElement("li");
     totalItem.className = "order-item total-item";
@@ -101,6 +108,7 @@ function updateOrderList() {
   }
 
   // checkout button
+  /* checkout button that will be created and displayed if total is greater than zero */
   if (total > 0) {
     const checkout = document.createElement("button");
     checkout.className = "checkout";
@@ -110,6 +118,7 @@ function updateOrderList() {
   }
 }
 
+/* function for getting all the inputs and selection button in the modal checkout */
 function initCheckout() {
   const modal = document.getElementById("checkoutModal");
   const closeBtn = document.querySelector(".close");
@@ -209,6 +218,7 @@ function resetModal() {
   });
 }
 
+/* async function for api posting for order to the database */
 async function processOrder(customerName) {
   const orderData = {
     customerName: customerName,

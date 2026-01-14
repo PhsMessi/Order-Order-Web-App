@@ -4,6 +4,8 @@ import { getAllOrders } from "../api/orders_api.js";
 timedate();
 loadOrders();
 
+/* async function that uses the getAllOrders Api to display or load all orders in the table async */
+
 async function loadOrders() {
   const tableBody = document.getElementById("ordersTableBody");
 

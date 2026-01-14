@@ -1,5 +1,6 @@
 const BASE_URL = "http://localhost:3000/api";
 
+/* post api request for posting order to database */
 export async function createOrder(orderData) {
   try {
     const response = await fetch(`${BASE_URL}/postOrder`, {
@@ -19,6 +20,8 @@ export async function createOrder(orderData) {
   }
 }
 
+/* get api request for getting orders */
+
 export async function getAllOrders() {
   try {
     const response = await fetch(`${BASE_URL}/getOrders`, {
@@ -35,6 +38,8 @@ export async function getAllOrders() {
     return { success: false, error: error.message };
   }
 }
+
+/* post api request for reservation*/
 
 export async function createReservation(reservationData) {
   try {
