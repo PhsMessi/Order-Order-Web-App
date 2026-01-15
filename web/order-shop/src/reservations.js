@@ -301,7 +301,7 @@ function filteredQuantity() {
   console.log(orderSummary, checkoutTotal);
 }
 
-/* API POST calling  */
+/* API POST calling with email confirmation API */
 
 async function processReservation(name, phone, email) {
   const selectedPaymentBtn = document.querySelector(".mode-btn.selected");
@@ -338,7 +338,6 @@ async function processReservation(name, phone, email) {
   const result = await createReservation(reservationData);
 
   if (result.success) {
-    // ✅ Send confirmation email
     try {
       const emailResult = await sendConfirmationEmail({
         email: email,
