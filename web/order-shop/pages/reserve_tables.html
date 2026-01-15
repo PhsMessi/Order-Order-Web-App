@@ -27,27 +27,32 @@
         </ul>
     </nav>
     <!-- section -->
-     <section>
-        <table class="reservation-table">
-            <thead>
-                <tr>
-                    <th>Reservation ID</th>
-                    <th>Customer name</th>
-                    <th>Customer email</th>
-                    <th>Customer phone</th>
-                    <th>Items</th>
-                    <th>Total</th>
-                    <th>Payment Mode</th>
-                    <th>Money</th>
-                    <th>Change</th>
-                    <th>Pick-up Time</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody id="reserveTableBody">
-                <!-- Orders will be loaded here -->
-            </tbody>
-        </table>
+     <section class="reservation-section">
+        <h1>Reservations Table</h1>
+        <div class="reservation-container">
+            <table class="reservation-table">
+                <thead>
+                    <tr>
+                        <th>Reservation ID</th>
+                        <th>Customer name</th>
+                        <th>Customer email</th>
+                        <th>Customer phone</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Payment Mode</th>
+                        <th>Money</th>
+                        <th>Change</th>
+                        <th>Pick-up Time</th>
+                        <th>Paid</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="reserveTableBody">
+                    <!-- Orders will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+        
      </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script type="module" src="../src/render_reservation.js"></script>

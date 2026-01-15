@@ -1,15 +1,15 @@
-.transactions-section {
+.reservation-section {
   padding: 2rem;
   max-width: 1400px;
   margin: 0 auto;
 }
 
-.transactions-section h1 {
+.reservation-section h1 {
   margin-bottom: 2rem;
   color: #333;
 }
 
-.orders-container {
+.reservation-container {
   overflow-x: auto;
   background: white;
   border-radius: 8px;
