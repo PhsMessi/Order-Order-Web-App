@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Reservations - PASTRY ORDER</title>
+    <link rel="stylesheet" href="../css//main.css">
+    <link rel="stylesheet" href="../css/reserve_tables.css">
 </head>
 <body>
     <!-- navbar -->
@@ -29,14 +31,17 @@
         <table class="reservation-table">
             <thead>
                 <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
+                    <th>Reservation ID</th>
+                    <th>Customer name</th>
+                    <th>Customer email</th>
+                    <th>Customer phone</th>
                     <th>Items</th>
                     <th>Total</th>
                     <th>Payment Mode</th>
                     <th>Money</th>
                     <th>Change</th>
-                    <th>Date</th>
+                    <th>Pick-up Time</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody id="reserveTableBody">
@@ -45,5 +50,6 @@
         </table>
      </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+    <script type="module" src="../src/render_reservation.js"></script>
 </body>
 </html>

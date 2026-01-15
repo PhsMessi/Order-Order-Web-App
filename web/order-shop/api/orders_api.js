@@ -60,6 +60,7 @@ export async function createReservation(reservationData) {
   }
 }
 
+/* async function the sends email confirmation after resservation */
 export async function sendConfirmationEmail(emailData) {
   try {
     const response = await fetch(`${BASE_URL}/emailConfirmation`, {
