@@ -60,7 +60,7 @@ async function initReservations() {
         <td>$${parseFloat(data.money).toFixed(2)}</td>
         <td>$${parseFloat(data.change).toFixed(2)}</td>
         <td>${pickupTime}</td>
-        <td>${data.paid ? "Paid" : "Unpaid"}</td>
+        <td>${data.paid ? "Paid" : "<button> Process </button>"}</td>
         <td><span class="status-${data.status}">${data.status}</span></td>
       </tr>
     `;

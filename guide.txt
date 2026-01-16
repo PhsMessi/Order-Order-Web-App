@@ -2,6 +2,7 @@
 
 make a reservation table html(Done)
 make a api for rendering all the tables (Done)
+add a pending button that will process the order()
 make a api for updating the status of a reservation 
 after updating It will be posted in the order database
 
