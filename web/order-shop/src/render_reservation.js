@@ -69,7 +69,7 @@ export async function initReservations() {
 
   attachButtonListeners();
 }
-/* this is a gaddamm high level javascript stuff hahahaha holy molyy*/
+
 function attachButtonListeners() {
   const processButtons = document.querySelectorAll(".processbtn");
   processButtons.forEach((btn) => {
@@ -78,11 +78,14 @@ function attachButtonListeners() {
         decodeURIComponent(e.target.dataset.reservation),
       );
 
-      const event = new CustomEvent("openReservationCheckout", {
-        detail: reservationData,
-      });
+      // Store in sessionStorage
+      sessionStorage.setItem(
+        "pendingReservation",
+        JSON.stringify(reservationData),
+      );
 
-      window.dispatchEvent(event);
+      // Redirect to transactions page
+      window.location.href = "../index.html";
     });
   });
 }

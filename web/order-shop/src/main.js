@@ -6,6 +6,8 @@ timedate();
 let currentTotal = 0;
 let selectedMoney = 0;
 let paymentMode = "cash";
+let isProcessingReservation = false;
+let currentReservationId = null;
 
 switchButton();
 renderProducts("bread"); // Start by showing bread
@@ -13,6 +15,15 @@ initCheckout();
 
 window.addEventListener("openReservationCheckout", (e) => {
   handleReservationCheckout(e.detail);
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  const pendingReservation = sessionStorage.getItem("pendingReservation");
+  if (pendingReservation) {
+    const reservationData = JSON.parse(pendingReservation);
+    sessionStorage.removeItem("pendingReservation"); // Clear it
+    handleReservationCheckout(reservationData);
+  }
 });
 
 /* function that switch the buttonfor showing bread or coffee products */
@@ -222,7 +233,7 @@ function resetModal() {
   });
 }
 
-// NEW: Handle reservation checkout
+/* this will called by the custom event that will process the reservation from processbtn */
 function handleReservationCheckout(reservationData) {
   console.log("Processing reservation:", reservationData);
 
@@ -292,6 +303,11 @@ async function processOrder(customerName) {
     change: selectedMoney - currentTotal,
   };
 
+  // Add reservation ID if processing a reservation
+  if (isProcessingReservation && currentReservationId) {
+    orderData.reservationId = currentReservationId;
+  }
+
   const result = await createOrder(orderData);
 
   if (result.success) {
@@ -303,7 +319,18 @@ async function processOrder(customerName) {
     //success modal should be heree
     displaySuccessModal();
 
-    setTimeout(endSuccessModal, 2000);
+    setTimeout(() => {
+      endSuccessModal();
+
+      // Reload page if this was a reservation
+      if (isProcessingReservation) {
+        window.location.reload();
+      }
+
+      // Reset reservation mode
+      isProcessingReservation = false;
+      currentReservationId = null;
+    }, 2000);
   } else {
     alert("Failed to save order: " + (result.data?.message || result.error));
   }
