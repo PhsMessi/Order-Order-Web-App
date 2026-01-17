@@ -11,6 +11,10 @@ switchButton();
 renderProducts("bread"); // Start by showing bread
 initCheckout();
 
+window.addEventListener("openReservationCheckout", (e) => {
+  handleReservationCheckout(e.detail);
+});
+
 /* function that switch the buttonfor showing bread or coffee products */
 function switchButton() {
   const navBtn = document.querySelectorAll(".nav-btn");
@@ -216,6 +220,65 @@ function resetModal() {
   document.querySelectorAll(".money-btn").forEach((btn) => {
     btn.classList.remove("selected");
   });
+}
+
+// NEW: Handle reservation checkout
+function handleReservationCheckout(reservationData) {
+  console.log("Processing reservation:", reservationData);
+
+  // Set reservation mode
+  isProcessingReservation = true;
+  currentReservationId = reservationData.reservation_id;
+
+  // Reset current order and populate with reservation items
+  orderMenu.forEach((item) => (item.quantity = 0));
+
+  reservationData.orderList.forEach((resItem) => {
+    const menuItem = orderMenu.find((item) => item.name === resItem.name);
+    if (menuItem) {
+      menuItem.quantity = resItem.quantity;
+    }
+  });
+
+  // Update the order list display
+  updateOrderList();
+
+  // Set the total
+  currentTotal = parseFloat(reservationData.total);
+
+  // Set payment mode
+  paymentMode = reservationData.paymentMode || "cash";
+
+  // Open checkout modal
+  const modal = document.getElementById("checkoutModal");
+  document.getElementById("modalTotal").textContent = currentTotal;
+  document.getElementById("gcashTotal").textContent = currentTotal;
+
+  // Pre-fill customer name
+  document.getElementById("customerName").value =
+    reservationData.customer_name || "";
+
+  // Set payment mode button
+  document.querySelectorAll(".mode-btn").forEach((btn) => {
+    btn.classList.remove("active");
+    if (btn.dataset.mode === paymentMode) {
+      btn.classList.add("active");
+    }
+  });
+
+  // Show appropriate payment section
+  const cashSection = document.getElementById("cashSection");
+  const gcashSection = document.getElementById("gcashSection");
+
+  if (paymentMode === "cash") {
+    cashSection.style.display = "block";
+    gcashSection.style.display = "none";
+  } else {
+    cashSection.style.display = "none";
+    gcashSection.style.display = "block";
+  }
+
+  modal.style.display = "block";
 }
 
 /* async function for api posting for order to the database */

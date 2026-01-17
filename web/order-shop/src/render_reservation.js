@@ -2,7 +2,7 @@ import { getAllReservations } from "../api/reservation_api.js";
 
 initReservations();
 
-async function initReservations() {
+export async function initReservations() {
   const tableBody = document.querySelector("#reserveTableBody");
 
   tableBody.innerHTML = `
@@ -39,13 +39,13 @@ async function initReservations() {
           <li>${item.name} (x${item.quantity}) - $${(
             item.price * item.quantity
           ).toFixed(2)}</li>
-        `
+        `,
         )
         .join("");
 
       const date = moment(data.order_created).format("MMM DD, YYYY - hh:mm A");
       const pickupTime = `${moment(data.pickup_time_start).format(
-        "hh:mm A"
+        "hh:mm A",
       )} - ${moment(data.pickup_time_end).format("hh:mm A")}`;
 
       return `
@@ -60,10 +60,29 @@ async function initReservations() {
         <td>$${parseFloat(data.money).toFixed(2)}</td>
         <td>$${parseFloat(data.change).toFixed(2)}</td>
         <td>${pickupTime}</td>
-        <td>${data.paid ? "Paid" : "<button> Process </button>"}</td>
+        <td>${data.paid ? "Paid" : `<button class="processbtn" data-reservation='${encodeURIComponent(JSON.stringify(data))}'> Process </button>`}</td>
         <td><span class="status-${data.status}">${data.status}</span></td>
       </tr>
     `;
     })
     .join("");
+
+  attachButtonListeners();
+}
+/* this is a gaddamm high level javascript stuff hahahaha holy molyy*/
+function attachButtonListeners() {
+  const processButtons = document.querySelectorAll(".processbtn");
+  processButtons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const reservationData = JSON.parse(
+        decodeURIComponent(e.target.dataset.reservation),
+      );
+
+      const event = new CustomEvent("openReservationCheckout", {
+        detail: reservationData,
+      });
+
+      window.dispatchEvent(event);
+    });
+  });
 }

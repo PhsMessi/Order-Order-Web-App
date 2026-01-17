@@ -2,8 +2,15 @@ import { mysql } from "../integrations/mysql.js";
 
 export function createOrder(req, res) {
   try {
-    const { customerName, orderList, total, paymentMode, money, change } =
-      req.body;
+    const {
+      customerName,
+      orderList,
+      total,
+      paymentMode,
+      money,
+      change,
+      reservationId, // NEW: Optional reservation ID
+    } = req.body;
 
     const cleanedOrderList = orderList.map((item) => ({
       name: item.name,
@@ -35,9 +42,40 @@ export function createOrder(req, res) {
             .json({ message: "database error", error: err.message });
         }
 
+        const orderId = results.insertId;
+
+        // NEW: If this order is from a reservation, update the reservation
+        if (reservationId) {
+          const updateReservation = `
+            UPDATE reservations 
+            SET paid = 1, 
+                money = ?, 
+                \`change\` = ?,
+                status = 'completed'
+            WHERE reservation_id = ?
+          `;
+
+          mysql.query(
+            updateReservation,
+            [money, change, reservationId],
+            (updateErr, updateResults) => {
+              if (updateErr) {
+                console.log("Failed to update reservation:", updateErr);
+                // Don't fail the order if reservation update fails
+                // Just log it and continue
+              } else {
+                console.log(
+                  `Reservation ${reservationId} marked as paid and completed`,
+                );
+              }
+            },
+          );
+        }
+
         return res.status(200).json({
           message: "order success",
-          orderId: results.insertId,
+          orderId: orderId,
+          reservationId: reservationId || null,
           order: {
             customerName,
             orderList: cleanedOrderList,
@@ -47,7 +85,7 @@ export function createOrder(req, res) {
             change,
           },
         });
-      }
+      },
     );
   } catch (error) {
     console.log("Connection failed:", error);
